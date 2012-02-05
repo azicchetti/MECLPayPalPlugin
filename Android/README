@@ -1,0 +1,130 @@
+This plugin lets you use the PayPal Mobile Express Checkout Library (MECL)
+in a phonegap/android application.
+At the moment, only the "Method Sequence with the PayPal Button on Your Mobile Webpage"
+is supported by the plugin (and this shouldn't be a big deal).
+
+
+Adding the plugin to your project
+=================================
+Using this plugin requires Android PhoneGap. Please refer to the PhoneGap
+documentation to learn how to setup a new project ( http://phonegap.com/start#android ).
+
+*** Please note that the PayPal MECL library requires internet access to contact 
+PayPal servers, therefore you must have
+
+	<uses-permission android:name="android.permission.INTERNET" />
+
+in your project AndroidManifest.xml ***
+
+
+1. To install the plugin, move www/js/MECLPayPalPlugin.js somewhere in your www folder
+and include a reference to it in your html file, after phonegap-VERSION.js.
+
+    <script type="text/javascript" charset="utf-8" src="phonegap-1.4.1.js"></script>
+    <script type="text/javascript" charset="utf-8" src="path/to/MECLPayPalPlugin.js"></script>
+
+2. Create a directory within your project called "src/com/phonegap/plugins/paypal" and move
+the following java files into it:
+
+	src/com/phonegap/plugins/paypal/MECLPayPalPlugin.java
+	src/com/phonegap/plugins/paypal/MECLBridge.java
+	src/com/phonegap/plugins/paypal/ResultDelegate.java
+
+3. In your res/xml/plugins.xml file add the following line before the final </plugin> tag:
+
+	<plugin name="MECLPayPalPlugin" value="com.phonegap.plugins.paypal.MECLPayPalPlugin"/>
+
+
+4. Add PayPal_MECL.jar to the libs/ directory of your eclipse project. You can download the
+library from: https://www.x.com/developers/paypal/documentation-tools/sdk
+You might experience an error here, if Eclipse can't find this jar.
+Don't worry, right click on the /libs folder and go to Build Paths/ > Configure Build Paths.
+Then, in the Libraries tab, add PayPal_MECL.jar to the Project
+This distribution contains the library (version 1.0) for your convenience, but you should
+download the latest copy from the above url.
+
+
+5. ??
+
+6. Profit
+
+
+Using the plugin
+=================
+The plugin creates the 	window.plugins.meclPayPal  object, with the following method:
+
+	fetchDeviceReferenceTokenWithAppID(callback)
+
+The callback argument is a function that takes a single argument:
+
+	function meclCallback(deviceToken){
+		...
+	}
+
+The deviceToken argument can be the device reference token string returned by PayPal servers
+or null if something went wrong.
+
+As you have noticed, at the moment the only MECL API that's exposed to javascript by the plugin is:
+
+	fetchDeviceReferenceTokenWithAppID
+
+You're encouraged to read the official documentation:
+
+	PayPal Mobile Express Checkout Library Developer Guide and Reference - Android
+
+to fully understand how this API works.
+
+It's worth noticing that the java code of this plugin uses some default settings that must be
+changed before deploying and after submitting your app to PayPal.
+These are:
+
+	Application ID: your live appID is sent by PayPal after their review of your application
+
+	Server: ENV_SANDBOX is the default setting of the plugin. Must be changed to ENV_LIVE
+		before going to production
+
+To change these values, just open the
+
+	src/com/phonegap/plugins/paypal/MECLBridge.java
+
+java file and edit the following lines to suit your needs:
+
+	// The PayPal server to be used - can also be ENV_NONE and ENV_LIVE
+	private static final int server = PayPal.ENV_SANDBOX;
+	// The ID of your application that you received from PayPal
+	private static final String appID = "APP-80W284485P519543T";
+
+
+
+But how this device token should be used?
+=========================================
+You must understand how the PayPal Express Checkout flow works.
+It's really really simple once you grasp the underlying concept.
+It goes without saying that you must also have a working server backend
+(read the PayPal Express Checkout Integration Guide if you've some troubles and
+remember that you can find a lot of examples on www.x.com,
+	https://www.x.com/developers/paypal/documentation-tools/sdk
+)
+
+To sum it up in some basic steps:
+
+	* your app gets a device token
+	* your app opens a webview (with the childbrowser plugin) to a certain url
+	  on YOUR backend server, providing the token and the "cart" info
+	* your app installs an handler on the webview location change event
+	* your backend server calls SetExpressCheckout and gets the checkout token
+	* your backend server redirects to www.paypal.com and provides both the device
+	  and the checkout token
+	* the user reviews the transaction on paypal.com and is redirected to your
+	  backend server again
+	* the user confirms the payment on your server
+	* your server calls DoExpressCheckoutPayment and redirects the browser to a
+	  certain SUCCESS_URL
+	* your application reacts on this location change, closes the webview and calls
+	  your server to receive a confirmation that the transaction was successful
+
+The flow may change a little bit but the basic idea remains the same.
+Once again, read the official PayPal documentation, it's really well written and exhaustive
+and have a look at the code samples.
+
+
