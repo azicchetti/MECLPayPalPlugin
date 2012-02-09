@@ -1,0 +1,6 @@
+You should be able to import this project in eclipse to test out the plugin with
+a working server backend.
+This backend is the one used by the official PayPal MECL Library example.
+
+Please note that you'll need a working PayPal sandbox buyer account to test the payment.
+
