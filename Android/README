@@ -128,3 +128,11 @@ Once again, read the official PayPal documentation, it's really well written and
 and have a look at the code samples.
 
 
+Example
+=======
+Under the example/ directory there's a project you should be able to import in eclipse to
+test out the plugin with a working server backend.
+This backend is the one used by the official PayPal MECL Library example.
+
+Please note that you'll need a working PayPal sandbox buyer account to test the payment.
+
