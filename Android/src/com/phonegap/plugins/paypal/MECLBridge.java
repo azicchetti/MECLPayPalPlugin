@@ -1,6 +1,5 @@
 package com.phonegap.plugins.paypal;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Message;
 
@@ -13,7 +12,7 @@ public class MECLBridge {
     protected static final int INITIALIZE_FAILURE = 1;
     
     Context mecl_context;
-    Activity mecl_activity;
+    PhonegapActivity mecl_activity;
     
     // The PayPal server to be used - can also be ENV_NONE and ENV_LIVE
     private static final int server = PayPal.ENV_SANDBOX;
@@ -21,7 +20,7 @@ public class MECLBridge {
     private static final String appID = "APP-80W284485P519543T";
 		
 	public MECLBridge(Context ctx) {
-        mecl_activity = (Activity) ctx;
+        mecl_activity = (PhonegapActivity) ctx;
         mecl_context = ctx.getApplicationContext();
 	}
 
