@@ -1,5 +1,4 @@
 #import <Foundation/Foundation.h>
-#import "PGPlugin.h"
 #ifdef PHONEGAP_FRAMEWORK
 #import <PhoneGap/PGPlugin.h>
 #else
