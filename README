@@ -21,3 +21,7 @@ the ChildBrowser plugin in conjunction with this one.
 
 The MECLPayPalPlugin comes in two flavors: iOS and Android.
 See the documentation in each platform directory.
+
+The offical MECL library (required to use the plugin) can be found at (look for Mobile Express Checkout Library):
+
+	https://www.x.com/developers/paypal/documentation-tools/paypal-sdk-index?qt-paypal_sdk_index=2#qt-paypal_sdk_index

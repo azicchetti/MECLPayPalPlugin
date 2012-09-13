@@ -1,19 +1,15 @@
 #import <Foundation/Foundation.h>
-#ifdef PHONEGAP_FRAMEWORK
-#import <PhoneGap/PGPlugin.h>
-#else
-#import "PGPlugin.h"
-#endif
+#import <Cordova/CDVPlugin.h>
 #import "PayPal.h"
 
 
-@interface MECLPayPalPlugin : PGPlugin <DeviceReferenceTokenDelegate> {
-	NSString* callbackID;
+@interface MECLPayPalPlugin : CDVPlugin <DeviceReferenceTokenDelegate> {
+	NSMutableDictionary* callbackIds;
 	NSString *drt;
 	BOOL tokenFetchAttempted;
 }
 
-@property (nonatomic, copy) NSString* callbackID;
+@property (nonatomic, retain) NSMutableDictionary* callbackIds;
 @property (nonatomic, retain) NSString *drt;
 @property (nonatomic, assign) BOOL tokenFetchAttempted;
 
