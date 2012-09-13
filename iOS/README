@@ -6,26 +6,26 @@ is supported by the plugin (and this shouldn't be a big deal).
 
 Adding the plugin to your project
 =================================
-Using this plugin requires iOS PhoneGap. Please refer to the PhoneGap
-documentation to learn how to setup a new project ( http://phonegap.com/start#ios-x4 ).
+Using this plugin requires iOS PhoneGap/Cordova. Please refer to the PhoneGap
+documentation to learn how to setup a new project ( http://docs.phonegap.com/en/2.0.0/guide_getting-started_ios_index.md.html#Getting%20Started%20with%20iOS ).
 
 *** Please note that the PayPal MECL library requires internet access to contact 
-PayPal servers, therefore you must edit your PhoneGap.plist and add * to the list
+PayPal servers, therefore you must edit your Cordova.plist and add * to the list
 of your ExternalHosts ***
 
 
 1. To install the plugin, move www/js/MECLPayPalPlugin.js somewhere in your www folder
-and include a reference to it in your html file, after phonegap-VERSION.js.
+and include a reference to it in your html file, after cordova-VERSION.js.
 
-    <script type="text/javascript" charset="utf-8" src="phonegap-1.4.1.js"></script>
+    <script type="text/javascript" charset="utf-8" src="cordova-2.0.0.js"></script>
     <script type="text/javascript" charset="utf-8" src="path/to/MECLPayPalPlugin.js"></script>
 
-2. Move or reference the following .h and .m files in your project Plugins/ directory
+2. Move or reference (better) the following .h and .m files in your project Plugins/ directory
 
 	Plugins/MECLPayPalPlugin.h
 	Plugins/MECLPayPalPlugin.m
 
-3. In your PhoneGap.plist file add the following key/value pair to the Plugins dictionary:
+3. In your Cordova.plist file add the following key/value pair to the Plugins dictionary:
 
 	key: MECLPayPalPlugin
 	value: MECLPayPalPlugin
@@ -126,7 +126,7 @@ and have a look at the code samples.
 
 Example
 =======
-Under the example/ directory there's a project you should be able to import in Xcode to
+Under the example/ directory there's a project you should be able to import into Xcode4 to
 test out the plugin with a working server backend.
 This backend is the one used by the official PayPal MECL Library example.
 
