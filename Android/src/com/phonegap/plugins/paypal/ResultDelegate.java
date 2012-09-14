@@ -9,13 +9,13 @@ public class ResultDelegate implements PayPalListener, Serializable {
 	@Override
 	public void couldNotFetchDeviceReferenceToken() {
 		MECLPayPalPlugin.getInstance()
-			.sendJavascript("MECLPayPal._callback(null);");
+			.sendJavascript("window.plugins.meclPayPal._callback(null);");
 	}
 
 	@Override
 	public void receivedDeviceReferenceToken(String token) {
 		MECLPayPalPlugin.getInstance()
-			.sendJavascript("MECLPayPal._callback('"+token+"');");
+			.sendJavascript("window.plugins.meclPayPal._callback('"+token+"');");
 
 	}
 

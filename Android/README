@@ -6,8 +6,8 @@ is supported by the plugin (and this shouldn't be a big deal).
 
 Adding the plugin to your project
 =================================
-Using this plugin requires Android PhoneGap. Please refer to the PhoneGap
-documentation to learn how to setup a new project ( http://phonegap.com/start#android ).
+Using this plugin requires Android PhoneGap/Cordova. Please refer to the PhoneGap
+documentation to learn how to setup a new project ( http://docs.phonegap.com/en/2.0.0/guide_getting-started_android_index.md.html#Getting%20Started%20with%20Android ).
 
 *** Please note that the PayPal MECL library requires internet access to contact 
 PayPal servers, therefore you must have
@@ -18,9 +18,9 @@ in your project AndroidManifest.xml ***
 
 
 1. To install the plugin, move www/js/MECLPayPalPlugin.js somewhere in your www folder
-and include a reference to it in your html file, after phonegap-VERSION.js.
+and include a reference to it in your html file, after cordova-VERSION.js.
 
-    <script type="text/javascript" charset="utf-8" src="phonegap-1.4.1.js"></script>
+    <script type="text/javascript" charset="utf-8" src="cordova-2.0.0.js"></script>
     <script type="text/javascript" charset="utf-8" src="path/to/MECLPayPalPlugin.js"></script>
 
 2. Create a directory within your project called "src/com/phonegap/plugins/paypal" and move
@@ -36,7 +36,9 @@ the following java files into it:
 
 
 4. Add PayPal_MECL.jar to the libs/ directory of your eclipse project. You can download the
-library from: https://www.x.com/developers/paypal/documentation-tools/sdk
+library from:
+	https://www.x.com/developers/paypal/documentation-tools/paypal-sdk-index?qt-paypal_sdk_index=2#qt-paypal_sdk_index
+
 You might experience an error here, if Eclipse can't find this jar.
 Don't worry, right click on the /libs folder and go to Build Paths/ > Configure Build Paths.
 Then, in the Libraries tab, add PayPal_MECL.jar to the Project
@@ -130,7 +132,7 @@ and have a look at the code samples.
 
 Example
 =======
-Under the example/ directory there's a project you should be able to import in eclipse to
+Under the example/ directory there's a project you should be able to open in eclipse to
 test out the plugin with a working server backend.
 This backend is the one used by the official PayPal MECL Library example.
 
