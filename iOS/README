@@ -3,21 +3,24 @@ in a phonegap/iOS application.
 At the moment, only the "Method Sequence with the PayPal Button on Your Mobile Webpage"
 is supported by the plugin (and this shouldn't be a big deal).
 
+This plugin has been successfully tested with Cordova 2.6.0.
+Hopefully it will also work with newer releases.
+
 
 Adding the plugin to your project
 =================================
 Using this plugin requires iOS PhoneGap/Cordova. Please refer to the PhoneGap
-documentation to learn how to setup a new project ( http://docs.phonegap.com/en/2.0.0/guide_getting-started_ios_index.md.html#Getting%20Started%20with%20iOS ).
+documentation to learn how to setup a new project ( http://docs.phonegap.com/en/2.6.0/guide_getting-started_index.md.html#Getting%20Started%20Guides ).
 
 *** Please note that the PayPal MECL library requires internet access to contact 
-PayPal servers, therefore you must edit your Cordova.plist and add * to the list
-of your ExternalHosts ***
+PayPal servers, therefore you should make sure that your config.xml has the * wildcard
+for the access node ***
 
 
 1. To install the plugin, move www/js/MECLPayPalPlugin.js somewhere in your www folder
 and include a reference to it in your html file, after cordova-VERSION.js.
 
-    <script type="text/javascript" charset="utf-8" src="cordova-2.0.0.js"></script>
+    <script type="text/javascript" charset="utf-8" src="path/to/cordova-2.6.0.js"></script>
     <script type="text/javascript" charset="utf-8" src="path/to/MECLPayPalPlugin.js"></script>
 
 2. Move or reference (better) the following .h and .m files in your project Plugins/ directory
@@ -25,7 +28,7 @@ and include a reference to it in your html file, after cordova-VERSION.js.
 	Plugins/MECLPayPalPlugin.h
 	Plugins/MECLPayPalPlugin.m
 
-3. In your Cordova.plist file add the following key/value pair to the Plugins dictionary:
+3. In your config.xml file add the following key/value pair to the Plugins dictionary:
 
 	key: MECLPayPalPlugin
 	value: MECLPayPalPlugin
