@@ -3,36 +3,41 @@ package com.phonegap.plugins.paypal;
 import org.json.JSONArray;
 import android.util.Log;
 
-import org.apache.cordova.api.Plugin;
-import org.apache.cordova.api.PluginResult;
-import org.apache.cordova.api.PluginResult.Status;
+import org.apache.cordova.api.CallbackContext;
+import org.apache.cordova.api.CordovaPlugin;
 
 /**
  * @author Andrea Zicchetti 
  *
  */
-public class MECLPayPalPlugin extends Plugin {
+public class MECLPayPalPlugin extends CordovaPlugin {
 	private static MECLBridge mecl;
 	private static MECLPayPalPlugin _instance;
+	private static CallbackContext _callbackContext;
 
 	@Override
-	public PluginResult execute(String action, JSONArray data, String callbackId) {
-		PluginResult result=null;
+	public boolean execute(String action, JSONArray data, CallbackContext callbackContext) {
 		_instance=this;
+		_callbackContext=callbackContext;
 		
 		try{
 			if (action.equals("fetchDeviceReferenceTokenWithAppID")){
 				mecl = new MECLBridge(cordova.getActivity().getApplicationContext());
 				mecl.initialize();
-				result = new PluginResult(Status.OK);
+				return true;
 			}
 		} catch (Exception e){
 		    Log.d("MECLPayPalPlugin", "Got JSON Exception "+ e.getMessage());
-		    result = new PluginResult(Status.JSON_EXCEPTION);
 		}
-		return result;
+		return false;
 	}
 	
-	public static Plugin getInstance(){ return _instance; }
+	public static CordovaPlugin getInstance(){
+		return _instance;
+	}
+
+	public static CallbackContext getCallbackContext() {
+		return _callbackContext;
+	}
 
 }

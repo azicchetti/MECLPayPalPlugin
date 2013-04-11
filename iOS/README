@@ -108,9 +108,10 @@ remember that you can find a lot of examples on www.x.com,
 To sum it up in some basic steps:
 
 	* your app gets a device token
-	* your app opens a webview (with the childbrowser plugin) to a certain url
+	* your app opens a webview (with the InAppBrowser Cordova API) to a certain url
 	  on YOUR backend server, providing the token and the "cart" info
-	* your app installs an handler on the webview location change event
+	* your app installs an handler on the webview location change event (this is
+    the "loadstop" event in the InAppBrowser documentation)
 	* your backend server calls SetExpressCheckout and gets the checkout token
 	* your backend server redirects to www.paypal.com and provides both the device
 	  and the checkout token

@@ -3,16 +3,20 @@ in a phonegap/android application.
 At the moment, only the "Method Sequence with the PayPal Button on Your Mobile Webpage"
 is supported by the plugin (and this shouldn't be a big deal).
 
+This plugin has been successfully tested with Cordova 2.6.0.
+Hopefully it will also work with newer releases.
+
 
 Adding the plugin to your project
 =================================
 Using this plugin requires Android PhoneGap/Cordova. Please refer to the PhoneGap
-documentation to learn how to setup a new project ( http://docs.phonegap.com/en/2.0.0/guide_getting-started_android_index.md.html#Getting%20Started%20with%20Android ).
+documentation to learn how to setup a new project ( http://docs.phonegap.com/en/2.6.0/guide_getting-started_android_index.md.html#Getting%20Started%20with%20Android ).
 
 *** Please note that the PayPal MECL library requires internet access to contact 
-PayPal servers, therefore you must have
+PayPal servers and the permission to get the device id, therefore you must have:
 
 	<uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
 in your project AndroidManifest.xml ***
 
@@ -20,7 +24,7 @@ in your project AndroidManifest.xml ***
 1. To install the plugin, move www/js/MECLPayPalPlugin.js somewhere in your www folder
 and include a reference to it in your html file, after cordova-VERSION.js.
 
-    <script type="text/javascript" charset="utf-8" src="cordova-2.0.0.js"></script>
+    <script type="text/javascript" charset="utf-8" src="path/to/cordova-2.6.0.js"></script>
     <script type="text/javascript" charset="utf-8" src="path/to/MECLPayPalPlugin.js"></script>
 
 2. Create a directory within your project called "src/com/phonegap/plugins/paypal" and move
@@ -30,7 +34,7 @@ the following java files into it:
 	src/com/phonegap/plugins/paypal/MECLBridge.java
 	src/com/phonegap/plugins/paypal/ResultDelegate.java
 
-3. In your res/xml/plugins.xml file add the following line before the final </plugin> tag:
+3. In your res/xml/config.xml file add the following line before the final </plugins> tag:
 
 	<plugin name="MECLPayPalPlugin" value="com.phonegap.plugins.paypal.MECLPayPalPlugin"/>
 
@@ -57,14 +61,15 @@ The plugin creates the 	window.plugins.meclPayPal  object, with the following me
 
 	fetchDeviceReferenceTokenWithAppID(callback)
 
-The callback argument is a function that takes a single argument:
+The callback argument is a function that takes a single argument, for example:
 
 	function meclCallback(deviceToken){
 		...
 	}
 
-The deviceToken argument can be the device reference token string returned by PayPal servers
-or null if something went wrong.
+The deviceToken argument can be:
+* the device reference token string returned by PayPal servers
+* null, if something went wrong.
 
 As you have noticed, at the moment the only MECL API that's exposed to javascript by the plugin is:
 
@@ -77,13 +82,15 @@ You're encouraged to read the official documentation:
 to fully understand how this API works.
 
 It's worth noticing that the java code of this plugin uses some default settings that must be
-changed before deploying and after submitting your app to PayPal.
+changed before deploying and after submitting your app to PayPal and the Apple Store / Google Play.
+
 These are:
 
 	Application ID: your live appID is sent by PayPal after their review of your application
 
 	Server: ENV_SANDBOX is the default setting of the plugin. Must be changed to ENV_LIVE
 		before going to production
+
 
 To change these values, just open the
 
@@ -111,9 +118,10 @@ remember that you can find a lot of examples on www.x.com,
 To sum it up in some basic steps:
 
 	* your app gets a device token
-	* your app opens a webview (with the childbrowser plugin) to a certain url
+	* your app opens a webview (with the InAppBrowser Cordova API) to a certain url
 	  on YOUR backend server, providing the token and the "cart" info
-	* your app installs an handler on the webview location change event
+	* your app installs an handler on the webview location change event (this is
+    the "loadstop" event in the InAppBrowser documentation)
 	* your backend server calls SetExpressCheckout and gets the checkout token
 	* your backend server redirects to www.paypal.com and provides both the device
 	  and the checkout token
