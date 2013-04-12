@@ -3,8 +3,11 @@
 	function MECLPayPal() {};
 
 	MECLPayPal.prototype.fetchDeviceReferenceTokenWithAppID=function(callback){
-		window.plugins.meclPayPal._callback=callback;
-		cordova.exec(null,null,"MECLPayPalPlugin","fetchDeviceReferenceTokenWithAppID",[]);
+		cordova.exec(function(message){
+			callback(message); // the token
+		}, function(){
+			callback(null); // fail
+		}, "MECLPayPalPlugin","fetchDeviceReferenceTokenWithAppID",[]);
 	}
 
 	if (!window.plugins) window.plugins={};

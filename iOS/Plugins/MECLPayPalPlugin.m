@@ -1,22 +1,17 @@
 #import "MECLPayPalPlugin.h"
+#import <Cordova/CDV.h>
 
 @implementation MECLPayPalPlugin
-@synthesize callbackIds=_callbackIds;
-@synthesize drt, tokenFetchAttempted;
+@synthesize commandReference, tokenFetchAttempted;
 
 /* get the app id from developer.paypal.com */
 #define PP_APP_ID @"APP-80W284485P519543T"
 /* ENV_NONE (offline), ENV_SANDBOX or ENV_LIVE */
 #define PP_APP_ENV ENV_SANDBOX
 
-- (NSMutableDictionary*)callbackIds {
-	if(_callbackIds == nil) {
-		_callbackIds = [[NSMutableDictionary alloc] init];
-	}
-	return _callbackIds;
-}
-
--(void)fetchDeviceReferenceTokenWithAppID:(NSMutableArray*)arguments withDict:(NSMutableArray*)options {
+-(void)fetchDeviceReferenceTokenWithAppID:(CDVInvokedUrlCommand*)command
+{
+	self.commandReference = command;
 	if (!tokenFetchAttempted) {
 		tokenFetchAttempted = TRUE;
 		[[PayPal getPayPalInst] fetchDeviceReferenceTokenWithAppID:PP_APP_ID forEnvironment:PP_APP_ENV withDelegate:self];
@@ -25,8 +20,7 @@
 }
 
 - (void)dealloc {
-	[_callbackIds dealloc];
-	self.drt = nil;
+	self.commandReference = nil;
 	[super dealloc];
 }
 
@@ -35,11 +29,10 @@
 #pragma mark DeviceReferenceTokenDelegate methods
 
 - (void)receivedDeviceReferenceToken:(NSString *)token {
-	//NSLog(@"DEVICE REFERENCE TOKEN: %@", token);
-	self.drt = token;
+	NSLog(@"DEVICE REFERENCE TOKEN: %@", token);
 	tokenFetchAttempted = FALSE;
-	NSString* jsCallback = [NSString stringWithFormat:@"window.plugins.meclPayPal._callback('%@');",self.drt]; 
-	[self writeJavascript:jsCallback];
+	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:token];
+	[self.commandDelegate sendPluginResult:pluginResult callbackId:self.commandReference.callbackId];
 }
 
 //This method is called when a device reference token could not be fetched.
@@ -47,11 +40,9 @@
 	//optionally check the errorMessage property to see what the problem was
 	NSLog(@"DEVICE REFERENCE TOKEN ERROR: %@", [PayPal getPayPalInst].errorMessage);
 
-	//clear any previously-stored token
-	self.drt = nil;
 	tokenFetchAttempted = FALSE;
-	NSString* jsCallback = [NSString stringWithFormat:@"window.plugins.meclPayPal._callback(%@);",@"null"]; 
-	[self writeJavascript:jsCallback];
+	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+	[self.commandDelegate sendPluginResult:pluginResult callbackId:self.commandReference.callbackId];
 }
 
 @end

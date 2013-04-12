@@ -1,19 +1,16 @@
-#import <Foundation/Foundation.h>
-#import <Cordova/CDVPlugin.h>
+#import <Cordova/CDV.h>
 #import "PayPal.h"
 
 
 @interface MECLPayPalPlugin : CDVPlugin <DeviceReferenceTokenDelegate> {
-	NSMutableDictionary* callbackIds;
-	NSString *drt;
+	CDVInvokedUrlCommand *commandReference;
 	BOOL tokenFetchAttempted;
 }
 
-@property (nonatomic, retain) NSMutableDictionary* callbackIds;
-@property (nonatomic, retain) NSString *drt;
+@property (nonatomic, retain) CDVInvokedUrlCommand *commandReference;
 @property (nonatomic, assign) BOOL tokenFetchAttempted;
 
 //Instance Method  
--(void)fetchDeviceReferenceTokenWithAppID:(NSMutableArray*)arguments withDict:(NSMutableArray*)options;
+-(void)fetchDeviceReferenceTokenWithAppID:(CDVInvokedUrlCommand*)command;
  
 @end
