@@ -40,13 +40,18 @@ and add the following files to your project Plugins/ directory
 	Plugins/PayPal.h
 	Plugins/libPayPalEC.a
 
-This distribution contains a copy of those files (version 1-0-3-070) for your convenience, but
+This distribution contains a copy of those files (version 1-0-3, md5sum f0bcdd212a9a6fdf39d911d5bb8c0b19) for your convenience, but
 you should download the latest copy from the url above.
 
 
-5. ??
+5. In XCode add the following resources in the "Linked Frameworks and Libraries" section (the app won't compile otherwise):
 
-6. Profit
+  libxml2.dylib
+  Security.Framework
+
+6. ??
+
+7. Profit
 
 
 Using the plugin
